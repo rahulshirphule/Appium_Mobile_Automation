@@ -1,4 +1,4 @@
-package calculator;
+package org.example;
 
 import java.net.MalformedURLException;
 
@@ -31,24 +31,16 @@ public class TestDisplay {
 		DesiredCapabilities dc = new DesiredCapabilities();
 
 		dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
-
 		dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
-
 		dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-
 		dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, "10.0");
-
 		dc.setCapability("appWaitForLaunch", false);
-
 		dc.setCapability("appPackage", "net.ludeke.calculator");
-
 		dc.setCapability("appActivity", "com.android.calculator2.Calculator");
-
-		URL url;
-
+		
 		try {
 
-			url = new URL("http://127.0.0.1:4723/wd/hub");
+			URL url = new URL("http://127.0.0.1:4723/wd/hub");
 
 			AndroidDriver driver = new AndroidDriver(url, dc);
 			
@@ -104,26 +96,21 @@ public class TestDisplay {
 	private static void testDigitPressed(AndroidDriver driver) {
 
 		driver.findElement(By.id("net.ludeke.calculator:id/digit1")).click();
-
 		driver.findElement(By.id("net.ludeke.calculator:id/digit2")).click();
-
 		driver.findElement(By.id("net.ludeke.calculator:id/digit3")).click();
 
-		checkTheEditTextValue(driver, "123", "Digits Test Passed");
+		checkTheEditTextValue(driver, "123", "Digits Test Passed","Digits Test Failed");
 
 	}
 
 	private static void testNumericAndArithmeticButtonPressed(AndroidDriver driver) {
 
 		driver.findElement(By.id("net.ludeke.calculator:id/digit1")).click();
-
 		driver.findElement(By.id("net.ludeke.calculator:id/digit2")).click();
-
 		driver.findElement(By.id("net.ludeke.calculator:id/plus")).click();
-
 		driver.findElement(By.id("net.ludeke.calculator:id/digit3")).click();
 
-		checkTheEditTextValue(driver, "12plus3", "Arithmatic Test Passed");
+		checkTheEditTextValue(driver, "12plus3", "Arithmatic Test Passed","Arithmatic Test Failed");
 
 	}
 
@@ -135,7 +122,7 @@ public class TestDisplay {
 				.longPress(longPressOptions().withElement(element(element)).withDuration(Duration.ofMillis(2000)))
 				.release().perform();
 
-		checkTheEditTextValue(driver, "", "Clear display Test Passed");
+		checkTheEditTextValue(driver, "", "Clear display Test Passed","Clear display Test Failed");
 
 	}
 
@@ -155,11 +142,11 @@ public class TestDisplay {
 
 		// Thread.sleep(2000);
 
-		checkTheEditTextValue(driver, "123point42", "Decimal Test Passed");
+		checkTheEditTextValue(driver, "123point42", "Decimal Test Passed","Decimal Test Failed");
 
 	}
 
-	private static void checkTheEditTextValue(AndroidDriver driver, String expectedValue, String successTestMsg) {
+	public static void checkTheEditTextValue(AndroidDriver driver, String expectedValue, String successTestMsg,String failMsg) {
 
 		List<WebElement> webElements =
 
@@ -168,16 +155,13 @@ public class TestDisplay {
 		for (int i = 0; i < webElements.size(); i++) {
 
 			WebElement webElement = webElements.get(i);
-
 			String value = webElement.getText().toString();
 
-//			           System.out.println("value: {}"+value);
-
 			if (value.trim().equals(expectedValue))
-
 			{
-
 				System.out.println(successTestMsg);
+			} else {
+				System.out.println(failMsg);
 			}
 
 		}

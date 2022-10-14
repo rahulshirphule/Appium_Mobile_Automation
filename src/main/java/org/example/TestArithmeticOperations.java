@@ -1,9 +1,10 @@
-package calculator;
+package org.example;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import org.example.TestDisplay;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -39,75 +40,20 @@ public class TestArithmeticOperations {
 		driver.findElement(By.id("android:id/button1")).click();
 		Thread.sleep(5000);
 
-		// Test if the plus arithmetic operation works and the result is correct, and it
-		// is printed on the display after the equal button is pressed
+		testPlusArithmeticOperation(driver);
 
-		driver.findElement(By.id("net.ludeke.calculator:id/digit7")).click();
+		testMinusArithmaticOperation(driver);
 
-		driver.findElement(By.id("net.ludeke.calculator:id/plus")).click();
+		testMultiplyArithmaticOperaton(driver);
 
-		driver.findElement(By.id("net.ludeke.calculator:id/digit3")).click();
+		testDevideArithmaticOperation(driver);
 
-		driver.findElement(By.id("net.ludeke.calculator:id/equal")).click();
+		Thread.sleep(3000);
 
-		Thread.sleep(5000);
+		driver.quit();
+	}
 
-		List<WebElement> offerElements = driver.findElements(By.className("android.widget.EditText"));
-
-		for (int i = 0; i < offerElements.size(); i++) {
-
-			WebElement offerElement = offerElements.get(i);
-
-			String value = offerElement.getText().toString();
-
-			System.out.println("offerElement: {} " + value);
-
-			if (value.trim().equals("10"))
-
-			{
-
-				System.out.println("plus arithmetic operation passed");
-			} else {
-				System.out.println("plus arithmetic operation failed");
-			}
-
-		}
-
-		// Test if the minus arithmetic operation works and the result is correct, and
-		// it is printed on the display after the equal button is pressed
-
-		driver.findElement(By.id("net.ludeke.calculator:id/clear")).click();
-		Thread.sleep(2000);
-		driver.findElement(By.id("net.ludeke.calculator:id/digit9")).click();
-
-		driver.findElement(By.id("net.ludeke.calculator:id/minus")).click();
-
-		driver.findElement(By.id("net.ludeke.calculator:id/digit6")).click();
-
-		driver.findElement(By.id("net.ludeke.calculator:id/equal")).click();
-
-		Thread.sleep(5000);
-
-		List<WebElement> offerElements1 = driver.findElements(By.className("android.widget.EditText"));
-
-		for (int i = 0; i < offerElements1.size(); i++) {
-
-			WebElement offerElement1 = offerElements1.get(i);
-
-			String value = offerElement1.getText().toString();
-
-			System.out.println("offerElement1: {} " + value);
-
-			if (value.trim().equals("3"))
-
-			{
-
-				System.out.println("minus arithmetic operation passed");
-			} else {
-				System.out.println("minus arithmetic operation failed");
-			}
-
-		}
+	private static void testMultiplyArithmaticOperaton(AndroidDriver driver) throws InterruptedException {
 
 		// Test if the multiply arithmetic operation works and the result is correct,
 		// and it is printed on the display after the equal button is pressed
@@ -124,35 +70,39 @@ public class TestArithmeticOperations {
 
 		Thread.sleep(5000);
 
-		List<WebElement> offerElements2 = driver.findElements(By.className("android.widget.EditText"));
+		TestDisplay.checkTheEditTextValue(driver,"8","multiply arithmetic operation passed","multiply arithmetic operation failed");
 
-		for (int i = 0; i < offerElements2.size(); i++) {
+	}
 
-			WebElement offerElement2 = offerElements2.get(i);
+	private static void testMinusArithmaticOperation(AndroidDriver driver) throws InterruptedException {
 
-			String value = offerElement2.getText().toString();
-
-			System.out.println("offerElement2: {} " + value);
-
-			if (value.trim().equals("8"))
-
-			{
-
-				System.out.println("multiply arithmetic operation passed");
-			} else {
-				System.out.println("multiply arithmetic operation failed");
-			}
-
-		}
-
-		// Test if the divide arithmetic operation works and the result is correct, and
+		// Test if the minus arithmetic operation works and the result is correct, and
 		// it is printed on the display after the equal button is pressed
 
 		driver.findElement(By.id("net.ludeke.calculator:id/clear")).click();
 		Thread.sleep(2000);
 		driver.findElement(By.id("net.ludeke.calculator:id/digit9")).click();
 
-		driver.findElement(By.id("net.ludeke.calculator:id/div")).click();
+		driver.findElement(By.id("net.ludeke.calculator:id/minus")).click();
+
+		driver.findElement(By.id("net.ludeke.calculator:id/digit6")).click();
+
+		driver.findElement(By.id("net.ludeke.calculator:id/equal")).click();
+
+		Thread.sleep(5000);
+
+		TestDisplay.checkTheEditTextValue(driver,"3","minus arithmetic operation passed","minus arithmetic operation failed");
+
+	}
+
+
+	private static void testPlusArithmeticOperation(AndroidDriver driver) throws InterruptedException {
+		// Test if the plus arithmetic operation works and the result is correct, and it
+		// is printed on the display after the equal button is pressed
+
+		driver.findElement(By.id("net.ludeke.calculator:id/digit7")).click();
+
+		driver.findElement(By.id("net.ludeke.calculator:id/plus")).click();
 
 		driver.findElement(By.id("net.ludeke.calculator:id/digit3")).click();
 
@@ -160,26 +110,26 @@ public class TestArithmeticOperations {
 
 		Thread.sleep(5000);
 
-		List<WebElement> offerElements3 = driver.findElements(By.className("android.widget.EditText"));
-
-		for (int i = 0; i < offerElements3.size(); i++) {
-
-			WebElement offerElement3 = offerElements3.get(i);
-
-			String value = offerElement3.getText().toString();
-
-			System.out.println("offerElement3: {} " + value);
-
-			if (value.trim().equals("3"))
-
-			{
-
-				System.out.println("divide arithmetic operation passed");
-			} else {
-				System.out.println("divide arithmetic operation failed");
-			}
-
-		}
+		TestDisplay.checkTheEditTextValue(driver,"10","plus arithmetic operation passed","plus arithmetic operation failed");
 
 	}
+
+	private static void testDevideArithmaticOperation(AndroidDriver driver) throws InterruptedException {
+
+		// Test if the divide arithmetic operation works and the result is correct, and
+		// it is printed on the display after the equal button is pressed
+
+		driver.findElement(By.id("net.ludeke.calculator:id/clear")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.id("net.ludeke.calculator:id/digit9")).click();
+		driver.findElement(By.id("net.ludeke.calculator:id/div")).click();
+		driver.findElement(By.id("net.ludeke.calculator:id/digit3")).click();
+		driver.findElement(By.id("net.ludeke.calculator:id/equal")).click();
+
+		Thread.sleep(5000);
+
+		TestDisplay.checkTheEditTextValue(driver,"3","divide arithmetic operation passed","divide arithmetic operation failed");
+
+	}
+
 }
